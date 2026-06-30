@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "ride-sharing-app"
+version = "0.1.0"
+description = "Clean Architecture Ride Sharing Application with Reflex & FastAPI"
+authors = ["Senior Architect <architect@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+reflex = "^0.9.6"
+fastapi = "^0.138.2"
+uvicorn = "^0.28.0"
+sqlalchemy = "^2.0.51"
+asyncpg = "^0.31.0"
+alembic = "^1.18.5"
+pydantic = {extras = ["email"], version = "^2.13.4"}
+pydantic-settings = "^2.14.2"
+pyjwt = "^2.13.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+bcrypt = "^5.0.0"
+redis = "^7.4.1"
+celery = "^5.6.3"
+structlog = "^26.1.0"
+prometheus-client = "^0.25.0"
+websockets = "^16.0"
+httpx = "^0.28.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+pytest-asyncio = "^0.23.5"
+black = "^24.2.0"
+isort = "^5.13.2"
+mypy = "^1.9.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.pyrefly]
+python-interpreter-path = ".venv/Scripts/python.exe"

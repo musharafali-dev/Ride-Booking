@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: ride_sharing_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ridesharing
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ridesharing"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: ride_sharing_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: ride_sharing_api
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env.example
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ridesharing
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: uvicorn app.api.v1.router:app --host 0.0.0.0 --port 8000 --reload
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: ride_sharing_worker
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env.example
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    volumes:
+      - .:/app
+    command: celery -A app.infrastructure.tasks.celery_app worker --loglevel=info
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: ride_sharing_beat
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env.example
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    volumes:
+      - .:/app
+    command: celery -A app.infrastructure.tasks.celery_app beat --loglevel=info
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: ride_sharing_frontend
+    depends_on:
+      - app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - API_URL=http://app:8000
+
+  nginx:
+    image: nginx:alpine
+    container_name: ride_sharing_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+      - frontend
+
+volumes:
+  postgres_data:
+  redis_data:
