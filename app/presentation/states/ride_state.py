@@ -7,7 +7,7 @@ from app.presentation.states.auth_state import AuthState
 
 API_BASE_URL = "http://localhost:8000/api/v1"
 
-class RideState(rx.State):
+class RideState(rx.State):  # type: ignore
     pickup_lat: float = 37.7749
     pickup_lon: float = -122.4194
     dest_lat: float = 37.7892

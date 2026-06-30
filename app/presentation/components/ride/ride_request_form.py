@@ -15,14 +15,14 @@ def ride_request_form() -> rx.Component:
                     rx.hstack(
                         rx.input(
                             placeholder="Lat", 
-                            value=RideState.pickup_lat.to(str), 
-                            on_change=RideState.set_pickup_lat,
+                            value=RideState.pickup_lat.to(str),  # type: ignore
+                            on_change=RideState.set_pickup_lat,  # type: ignore
                             type="number"
                         ),
                         rx.input(
                             placeholder="Lon", 
-                            value=RideState.pickup_lon.to(str), 
-                            on_change=RideState.set_pickup_lon,
+                            value=RideState.pickup_lon.to(str),  # type: ignore
+                            on_change=RideState.set_pickup_lon,  # type: ignore
                             type="number"
                         ),
                         width="100%"
@@ -31,14 +31,14 @@ def ride_request_form() -> rx.Component:
                     rx.hstack(
                         rx.input(
                             placeholder="Lat", 
-                            value=RideState.dest_lat.to(str), 
-                            on_change=RideState.set_dest_lat,
+                            value=RideState.dest_lat.to(str),  # type: ignore
+                            on_change=RideState.set_dest_lat,  # type: ignore
                             type="number"
                         ),
                         rx.input(
                             placeholder="Lon", 
-                            value=RideState.dest_lon.to(str), 
-                            on_change=RideState.set_dest_lon,
+                            value=RideState.dest_lon.to(str),  # type: ignore
+                            on_change=RideState.set_dest_lon,  # type: ignore
                             type="number"
                         ),
                         width="100%"
@@ -116,7 +116,7 @@ def ride_request_form() -> rx.Component:
                 RideState.status == "completed",
                 rx.vstack(
                     rx.text("Ride completed successfully!", color="indigo", weight="bold"),
-                    custom_button("Book another ride", on_click=lambda: RideState.set_status("idle")),
+                    custom_button("Book another ride", on_click=lambda: RideState.set_status("idle")),  # type: ignore
                     align="center",
                     width="100%"
                 )
