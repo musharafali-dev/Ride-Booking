@@ -1,3 +1,4 @@
+# type: ignore
 import reflex as rx
 import httpx
 import json
