@@ -20,7 +20,7 @@ def register_page() -> rx.Component:
             rx.card(
                 rx.form(
                     rx.vstack(
-                        rx.heading("Get Started", size="5", weight="semibold", margin_bottom="16px"),
+                        rx.heading("Get Started", size="5", weight="bold", margin_bottom="16px"),
                         
                         rx.text("Full Name", size="2", weight="medium", color="slate"),
                         rx.input(

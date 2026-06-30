@@ -20,7 +20,7 @@ def login_page() -> rx.Component:
             rx.card(
                 rx.form(
                     rx.vstack(
-                        rx.heading("Welcome Back", size="5", weight="semibold", margin_bottom="16px"),
+                        rx.heading("Welcome Back", size="5", weight="bold", margin_bottom="16px"),
                         
                         rx.text("Email Address", size="2", weight="medium", color="slate"),
                         rx.input(
