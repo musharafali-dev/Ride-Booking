@@ -2,7 +2,7 @@ import reflex as rx
 import httpx
 from typing import Dict, Any, Optional
 
-API_BASE_URL = "http://localhost:8000/api/v1"
+API_BASE_URL = "http://127.0.0.1:8000/api/v1"
 
 def format_error(detail: Any) -> str:
     if not detail:

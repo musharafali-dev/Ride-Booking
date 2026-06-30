@@ -6,7 +6,7 @@ import asyncio
 from typing import Dict, Any, Optional
 from app.presentation.states.auth_state import AuthState
 
-API_BASE_URL = "http://localhost:8000/api/v1"
+API_BASE_URL = "http://127.0.0.1:8000/api/v1"
 
 class RideState(rx.State):  # type: ignore
     pickup_lat: float = 37.7749
