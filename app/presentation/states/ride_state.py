@@ -111,9 +111,11 @@ class RideState(rx.State):  # type: ignore
                 else:
                     self.status = "idle"
                     self.error_message = response.json().get("detail", "Request failed")
-            except Exception:
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
                 self.status = "idle"
-                self.error_message = "Failed to communicate with ride controller."
+                self.error_message = f"Failed to communicate with ride controller: {str(e)}"
 
     def update_ride_state_from_ws(self, payload_str: str):
         payload = json.loads(payload_str)
