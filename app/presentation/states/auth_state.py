@@ -92,7 +92,9 @@ class AuthState(rx.State):
                     return rx.redirect("/login")
                 else:
                     self.error_message = format_error(response.json().get("detail", "Registration failed"))
-            except Exception:
-                self.error_message = "Server communication failure during registration."
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                self.error_message = f"Server communication failure during registration: {str(e)}"
             finally:
                 self.is_loading = False
