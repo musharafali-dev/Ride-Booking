@@ -62,19 +62,19 @@ def ride_request_form() -> rx.Component:
                     rx.hstack(
                         rx.text("Estimated Distance:", size="2"),
                         rx.text(f"{RideState.distance_km} km", weight="bold", size="2"),
-                        justify="space-between",
+                        justify="between",
                         width="100%"
                     ),
                     rx.hstack(
                         rx.text("Estimated Time:", size="2"),
                         rx.text(f"{RideState.estimated_duration} mins", weight="bold", size="2"),
-                        justify="space-between",
+                        justify="between",
                         width="100%"
                     ),
                     rx.hstack(
                         rx.text("Estimated Fare:", size="3", color="indigo"),
                         rx.text(f"${RideState.estimated_fare}", weight="bold", size="4", color="indigo"),
-                        justify="space-between",
+                        justify="between",
                         width="100%"
                     ),
                     custom_button(
