@@ -25,7 +25,7 @@ def register_page() -> rx.Component:
                         rx.text("Full Name", size="2", weight="medium", color="slate"),
                         rx.input(
                             placeholder="John Doe",
-                            name="name",
+                            name="full_name",
                             type="text",
                             required=True,
                             width="100%",
