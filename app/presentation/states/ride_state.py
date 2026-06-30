@@ -90,6 +90,11 @@ class RideState(rx.State):  # type: ignore
         auth_state = await self.get_state(AuthState)
         token = auth_state.access_token
         
+        if not token:
+            self.status = "idle"
+            self.error_message = "You must be logged in to request a ride."
+            return rx.redirect("/login")
+            
         async with httpx.AsyncClient() as client:
             try:
                 headers = {"Authorization": f"Bearer {token}"}
