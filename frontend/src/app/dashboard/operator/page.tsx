@@ -97,7 +97,7 @@ export default function OperatorDashboard() {
     <div className="flex flex-col min-h-screen bg-[#020617]">
       <Navbar />
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-800 pb-8 mb-10">
           <div>
@@ -185,7 +185,7 @@ export default function OperatorDashboard() {
                           </div>
                           <div className="h-2 bg-slate-900 rounded-full overflow-hidden">
                             <div 
-                              className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500" 
+                              className="h-full bg-linear-to-r from-indigo-500 to-purple-500 transition-all duration-500" 
                               style={{ width: `${percentage}%` }}
                             ></div>
                           </div>
@@ -224,7 +224,7 @@ export default function OperatorDashboard() {
                     placeholder="Enter Guide Name"
                     value={newGuide}
                     onChange={(e) => setNewGuide(e.target.value)}
-                    className="flex-grow bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-500"
+                    className="grow bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-500"
                   />
                   <button 
                     type="submit"

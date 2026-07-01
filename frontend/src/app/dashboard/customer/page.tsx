@@ -112,7 +112,7 @@ export default function CustomerDashboard() {
     <div className="flex flex-col min-h-screen bg-[#020617]">
       <Navbar />
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         {/* Profile Card Header */}
         <div className="glass-panel rounded-3xl p-8 mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
@@ -364,7 +364,7 @@ export default function CustomerDashboard() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-indigo-900/40 to-indigo-950/20 border border-indigo-500/20 rounded-3xl p-8 text-center">
+            <div className="bg-linear-to-br from-indigo-900/40 to-indigo-950/20 border border-indigo-500/20 rounded-3xl p-8 text-center">
               <Shield className="h-10 w-10 text-indigo-400 mx-auto mb-4" />
               <h3 className="font-display font-bold text-lg text-white mb-2">Safe RideSphere Protection</h3>
               <p className="text-xs text-slate-400 leading-relaxed">

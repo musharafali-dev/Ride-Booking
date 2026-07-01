@@ -84,7 +84,7 @@ export default function DashboardHub() {
     <div className="flex flex-col min-h-screen bg-[#020617]">
       <Navbar />
 
-      <main className="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col justify-center w-full">
+      <main className="grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col justify-center w-full">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <h1 className="font-display font-extrabold text-4xl text-white tracking-tight sm:text-5xl">
             Select Your Workspace

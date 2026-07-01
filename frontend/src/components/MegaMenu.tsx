@@ -77,7 +77,7 @@ export default function MegaMenu({ onClose }: MegaMenuProps) {
         </div>
 
         {/* Right Column: Dynamic Banner */}
-        <div className="bg-gradient-to-br from-indigo-900/30 to-purple-950/20 border border-indigo-500/10 rounded-3xl p-8 flex flex-col justify-between">
+        <div className="bg-linear-to-br from-indigo-900/30 to-purple-950/20 border border-indigo-500/10 rounded-3xl p-8 flex flex-col justify-between">
           <div>
             <span className="text-[10px] uppercase font-bold tracking-widest text-indigo-400 block mb-2">Summer Promotion</span>
             <h4 className="font-display font-bold text-2xl text-white leading-snug">Explore Northern Pakistan in Comfort</h4>

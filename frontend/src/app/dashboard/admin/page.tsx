@@ -86,7 +86,7 @@ export default function AdminDashboard() {
     <div className="flex flex-col min-h-screen bg-[#020617]">
       <Navbar />
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         {/* Header */}
         <div className="border-b border-slate-800 pb-8 mb-10">
           <h1 className="font-display font-bold text-3xl text-white">Central Operations Center</h1>
