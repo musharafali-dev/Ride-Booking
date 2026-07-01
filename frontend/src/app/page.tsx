@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { 
   Search, Shield, Star, Heart, MapPin, 
-  Clock, Award, Calendar, ChevronRight, HelpCircle, Check 
+  Clock, Award, Calendar, ChevronRight, HelpCircle, Check, ArrowRight
 } from "lucide-react";
 
 interface Vehicle {
@@ -289,17 +289,36 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
+          <div className="flex gap-6 overflow-x-auto pb-6 pt-2 scrollbar-none">
             {categories.map((cat, idx) => (
               <Link 
                 key={idx} 
                 href={cat.link}
-                className="bg-white border border-slate-100 rounded-2xl p-4 flex flex-col items-center justify-center shrink-0 w-32 shadow-sm hover:shadow-md hover:border-slate-200 transition-all text-center group"
+                className="bg-white/70 backdrop-blur-md border border-white/50 rounded-3xl overflow-hidden shrink-0 w-44 sm:w-48 h-64 shadow-md hover:shadow-xl hover:border-blue-500/30 transition-all duration-300 flex flex-col group relative"
               >
-                <div className="w-16 h-12 overflow-hidden mb-3">
-                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform" />
+                {/* Image Container */}
+                <div className="w-full h-36 overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10"></div>
+                  <img 
+                    src={cat.image} 
+                    alt={cat.name} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                  />
                 </div>
-                <span className="text-xs font-bold text-slate-800 tracking-tight leading-tight">{cat.name}</span>
+                
+                {/* Content Container */}
+                <div className="p-4 flex flex-col justify-between grow z-20">
+                  <div>
+                    <h3 className="font-display font-bold text-sm text-slate-900 group-hover:text-blue-600 transition-colors duration-300 line-clamp-1">
+                      {cat.name}
+                    </h3>
+                    <p className="text-[10px] text-slate-400 mt-1 font-medium">Explore premium fleet</p>
+                  </div>
+                  
+                  <span className="text-[10px] font-bold text-blue-600 flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+                    Explore <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
