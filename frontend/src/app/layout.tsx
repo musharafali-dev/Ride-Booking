@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Fira_Sans, Fira_Code } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
-const firaSans = Fira_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
 });
 
-const firaCode = Fira_Code({
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-display",
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${firaSans.variable} ${firaCode.variable} antialiased bg-[#07090e] text-[#f1f5f9] min-h-screen flex flex-col font-sans`}
+        className={`${inter.variable} ${poppins.variable} antialiased bg-[#020617] text-[#f8fafc] min-h-screen flex flex-col font-sans`}
       >
         {children}
       </body>

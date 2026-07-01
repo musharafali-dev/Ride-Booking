@@ -6,17 +6,13 @@ from app.models.tour import Tour
 from app.core.security import get_password_hash
 
 def seed_db():
-    # Make sure tables exist
+    # Make sure we start with a clean slate
+    print("Dropping existing tables...")
+    Base.metadata.drop_all(bind=engine)
+    print("Creating all tables...")
     Base.metadata.create_all(bind=engine)
     
     db = SessionLocal()
-    
-    # Check if admin already exists
-    if db.query(User).filter(User.email == "admin@ridesphere.com").first():
-        print("Database already seeded.")
-        db.close()
-        return
-        
     print("Seeding database...")
     
     # Create default users
@@ -56,11 +52,11 @@ def seed_db():
     db.commit()
     db.refresh(owner)
     
-    # Create default vehicles
+    # Create default vehicles (12 items matching the specifications)
     vehicles = [
         Vehicle(
             owner_id=owner.id,
-            category="car_rental",
+            category="economy_car",
             make="Toyota",
             model="Corolla",
             year=2022,
@@ -76,30 +72,94 @@ def seed_db():
         ),
         Vehicle(
             owner_id=owner.id,
-            category="luxury",
-            make="Mercedes-Benz",
-            model="S-Class",
+            category="sedan",
+            make="Honda",
+            model="Civic",
             year=2023,
-            color="Black",
-            license_plate="VIP-777",
-            price_per_day=250.0,
-            price_per_hour=35.0,
+            color="White",
+            license_plate="LEB-1122",
+            price_per_day=60.0,
+            price_per_hour=10.0,
             seats=5,
             transmission="automatic",
             fuel_type="petrol",
-            image_url="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80",
+            image_url="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
             is_available=True
         ),
         Vehicle(
             owner_id=owner.id,
-            category="bike_rental",
-            make="Honda",
-            model="CB500X",
+            category="suv",
+            make="Toyota",
+            model="Prado",
             year=2021,
+            color="Black",
+            license_plate="SUV-4455",
+            price_per_day=180.0,
+            price_per_hour=25.0,
+            seats=7,
+            transmission="automatic",
+            fuel_type="diesel",
+            image_url="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="luxury_car",
+            make="BMW",
+            model="X5",
+            year=2022,
+            color="Blue",
+            license_plate="VIP-999",
+            price_per_day=220.0,
+            price_per_hour=30.0,
+            seats=5,
+            transmission="automatic",
+            fuel_type="petrol",
+            image_url="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="sports_car",
+            make="Porsche",
+            model="911",
+            year=2023,
             color="Red",
-            license_plate="BIKE-9922",
-            price_per_day=35.0,
-            price_per_hour=5.0,
+            license_plate="SPD-911",
+            price_per_day=450.0,
+            price_per_hour=60.0,
+            seats=2,
+            transmission="automatic",
+            fuel_type="octane",
+            image_url="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="city_bike",
+            make="Honda",
+            model="CB150F",
+            year=2022,
+            color="Black",
+            license_plate="MTR-7711",
+            price_per_day=20.0,
+            price_per_hour=3.0,
+            seats=2,
+            transmission="manual",
+            fuel_type="petrol",
+            image_url="https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="touring_bike",
+            make="Yamaha",
+            model="MT-15",
+            year=2022,
+            color="Cyan",
+            license_plate="MTR-8844",
+            price_per_day=30.0,
+            price_per_hour=4.5,
             seats=2,
             transmission="manual",
             fuel_type="petrol",
@@ -108,18 +168,82 @@ def seed_db():
         ),
         Vehicle(
             owner_id=owner.id,
-            category="bus_coaster",
+            category="sports_bike",
+            make="Kawasaki",
+            model="Ninja 650",
+            year=2021,
+            color="Green",
+            license_plate="SPD-650",
+            price_per_day=75.0,
+            price_per_hour=12.0,
+            seats=2,
+            transmission="manual",
+            fuel_type="octane",
+            image_url="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="touring_bike",
+            make="Honda",
+            model="Gold Wing",
+            year=2020,
+            color="Gold",
+            license_plate="GW-1800",
+            price_per_day=120.0,
+            price_per_hour=18.0,
+            seats=2,
+            transmission="automatic",
+            fuel_type="petrol",
+            image_url="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="coaster",
             make="Toyota",
             model="Coaster",
-            year=2020,
+            year=2021,
             color="White",
-            license_plate="BUS-8800",
+            license_plate="BUS-5566",
             price_per_day=150.0,
             price_per_hour=25.0,
             seats=29,
             transmission="manual",
             fuel_type="diesel",
             image_url="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="tourist_bus",
+            make="Hyundai",
+            model="Universe Bus",
+            year=2019,
+            color="Red",
+            license_plate="BUS-9900",
+            price_per_day=280.0,
+            price_per_hour=40.0,
+            seats=45,
+            transmission="manual",
+            fuel_type="diesel",
+            image_url="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
+            is_available=True
+        ),
+        Vehicle(
+            owner_id=owner.id,
+            category="electric_vehicle",
+            make="Tesla",
+            model="Model 3",
+            year=2022,
+            color="Gray",
+            license_plate="EV-333",
+            price_per_day=140.0,
+            price_per_hour=20.0,
+            seats=5,
+            transmission="automatic",
+            fuel_type="electric",
+            image_url="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=600&q=80",
             is_available=True
         )
     ]
@@ -152,7 +276,7 @@ def seed_db():
         
     db.commit()
     db.close()
-    print("Database seeding completed.")
+    print("Database seeding completed successfully.")
 
 if __name__ == "__main__":
     seed_db()

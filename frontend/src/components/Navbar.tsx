@@ -2,15 +2,39 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Car, User, Bell, ChevronDown } from "lucide-react";
+import { Car, User, Bell, ChevronDown, Search } from "lucide-react";
+import MegaMenu from "./MegaMenu";
+import CommandPalette from "./CommandPalette";
 
 export default function Navbar() {
   const [role, setRole] = useState("customer");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   useEffect(() => {
     const savedRole = localStorage.getItem("user_role") || "customer";
     setRole(savedRole);
+
+    // Sync state when role updates
+    const syncRole = () => {
+      setRole(localStorage.getItem("user_role") || "customer");
+    };
+    window.addEventListener("storage", syncRole);
+
+    // Listen for Ctrl+K
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("storage", syncRole);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const handleRoleChange = (newRole: string) => {
@@ -25,8 +49,8 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-[#07090e]/80 border-b border-slate-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-[#020617]/80 border-b border-slate-800/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
         {/* Brand */}
         <Link href="/" className="flex items-center space-x-2">
           <div className="bg-indigo-600 p-2 rounded-xl text-white">
@@ -38,20 +62,38 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-350">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
-          <Link href="/vehicles" className="hover:text-white transition-colors">Vehicles</Link>
+          
+          <div 
+            className="relative h-16 flex items-center"
+            onMouseEnter={() => setMegaMenuOpen(true)}
+          >
+            <button className="hover:text-white transition-colors flex items-center gap-1 cursor-pointer">
+              Vehicles <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+          </div>
+
           <Link href="/tours" className="hover:text-white transition-colors">Tours</Link>
           <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
         </nav>
 
         {/* Action Controls */}
         <div className="flex items-center space-x-4">
+          {/* Quick Search */}
+          <button 
+            onClick={() => setCommandPaletteOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-900 text-xs text-slate-500 hover:text-slate-300 transition-all"
+          >
+            <Search className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Search (Ctrl+K)</span>
+          </button>
+
           {/* Active Role Indicator / Simulator */}
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-all"
+              className="flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-all cursor-pointer"
             >
               <span>Demo Role: <span className="text-indigo-400 capitalize">{role}</span></span>
               <ChevronDown className="h-3 w-3" />
@@ -63,7 +105,7 @@ export default function Navbar() {
                   <button
                     key={r}
                     onClick={() => handleRoleChange(r)}
-                    className="w-full text-left px-4 py-2 hover:bg-slate-800 hover:text-white capitalize transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-slate-800 hover:text-white capitalize transition-colors cursor-pointer"
                   >
                     {r}
                   </button>
@@ -83,7 +125,13 @@ export default function Navbar() {
             <User className="h-5 w-5" />
           </Link>
         </div>
+
+        {/* Mega Menu Portal */}
+        {megaMenuOpen && <MegaMenu onClose={() => setMegaMenuOpen(false)} />}
       </div>
+
+      {/* Command Palette Overlay */}
+      {commandPaletteOpen && <CommandPalette onClose={() => setCommandPaletteOpen(false)} />}
     </header>
   );
 }

@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
 import { 
   Car, Plus, DollarSign, Calendar, TrendingUp, CheckCircle, 
-  AlertTriangle, Hammer, X, MessageCircle 
+  AlertTriangle, Hammer, X, BarChart2, Briefcase, FileText 
 } from "lucide-react";
 
 interface Vehicle {
@@ -19,6 +19,7 @@ interface Vehicle {
 }
 
 export default function OwnerDashboard() {
+  const [activeTab, setActiveTab] = useState("vehicles");
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [earnings, setEarnings] = useState(1480);
@@ -104,120 +105,184 @@ export default function OwnerDashboard() {
           </button>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-          <div className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl">
-            <span className="text-xs text-slate-500 block mb-1">Total Fleet</span>
-            <span className="text-3xl font-extrabold text-white">{vehicles.length} Vehicles</span>
-          </div>
-          <div className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl">
-            <span className="text-xs text-slate-500 block mb-1">Rented Vehicles</span>
-            <span className="text-3xl font-extrabold text-indigo-400">
-              {vehicles.filter(v => v.status === "rented").length} Rented
-            </span>
-          </div>
-          <div className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl">
-            <span className="text-xs text-slate-500 block mb-1">Maintenance Status</span>
-            <span className="text-3xl font-extrabold text-amber-400 flex items-center gap-2">
-              {vehicles.filter(v => v.status === "maintenance").length} Check
-            </span>
-          </div>
-          <div className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl flex items-center justify-between">
-            <div>
-              <span className="text-xs text-slate-500 block mb-1">Owner Earnings</span>
-              <span className="text-3xl font-extrabold text-emerald-400">${earnings}</span>
-            </div>
-            <TrendingUp className="h-6 w-6 text-emerald-500" />
-          </div>
+        {/* Tab Modules */}
+        <div className="flex gap-2 border-b border-slate-850 pb-4 mb-8 overflow-x-auto">
+          {["vehicles", "earnings", "bookings", "analytics"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-5 py-2.5 rounded-xl text-xs font-semibold capitalize transition-all ${
+                activeTab === tab 
+                  ? "bg-indigo-600 text-white" 
+                  : "text-slate-400 hover:text-white hover:bg-slate-900"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
 
-        {/* Main Section */}
+        {/* Workspace Panels */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Fleet Listings */}
+          
           <div className="lg:col-span-2 space-y-6">
-            <h2 className="font-display font-bold text-xl text-white flex items-center gap-2">
-              <Car className="h-5 w-5 text-indigo-400" /> Managed Fleet
-            </h2>
+            
+            {/* VEHICLES TAB */}
+            {activeTab === "vehicles" && (
+              <div className="space-y-6">
+                <h2 className="font-display font-bold text-xl text-white flex items-center gap-2">
+                  <Car className="h-5 w-5 text-indigo-400" /> Managed Fleet
+                </h2>
 
-            <div className="space-y-4">
-              {vehicles.map(v => (
-                <div key={v.id} className="border border-slate-800 bg-[#0c0f17] p-6 rounded-3xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-slate-700 transition-colors">
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-white">{v.make} {v.model}</h3>
-                    <div className="flex flex-wrap gap-4 text-xs text-slate-400 mt-2">
-                      <span className="capitalize">{v.category.replace("_", " ")}</span>
-                      <span>&bull;</span>
-                      <span>Next Checkup: {v.nextCheck}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-6 self-stretch sm:self-auto justify-between pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-800/80">
-                    <div className="text-right">
-                      <span className="text-base font-bold text-white">${v.price}/day</span>
-                      <span className="text-[10px] text-slate-500 block">Payout value</span>
-                    </div>
-
-                    <span className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize border ${
-                      v.status === "available" 
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                        : v.status === "rented"
-                        ? "bg-indigo-500/10 text-indigo-400 border-indigo-500/20"
-                        : "bg-amber-500/10 text-amber-400 border-amber-500/20"
-                    }`}>
-                      {v.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Booking Requests */}
-          <div className="space-y-6">
-            <h2 className="font-display font-bold text-xl text-white flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-indigo-400" /> Pending Offers
-            </h2>
-
-            <div className="space-y-4">
-              {requests.length === 0 ? (
-                <div className="border border-slate-850 p-6 rounded-2xl text-center text-slate-500 text-sm">
-                  No pending booking requests.
-                </div>
-              ) : (
-                requests.map(r => (
-                  <div key={r.id} className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl space-y-4">
-                    <div className="flex justify-between items-start">
+                <div className="space-y-4">
+                  {vehicles.map(v => (
+                    <div key={v.id} className="border border-slate-800 bg-[#0c0f17] p-6 rounded-3xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-slate-700 transition-colors">
                       <div>
-                        <span className="text-xs text-slate-500 block">Customer</span>
-                        <span className="font-semibold text-white text-sm">{r.customer}</span>
+                        <h3 className="font-display font-bold text-lg text-white">{v.make} {v.model}</h3>
+                        <div className="flex flex-wrap gap-4 text-xs text-slate-400 mt-2">
+                          <span className="capitalize">{v.category.replace("_", " ")}</span>
+                          <span>&bull;</span>
+                          <span>Next Checkup: {v.nextCheck}</span>
+                        </div>
                       </div>
-                      <span className="text-sm font-bold text-white">${r.amount}</span>
-                    </div>
-                    
-                    <div className="text-xs text-slate-400 bg-slate-900/50 p-3 rounded-lg border border-slate-850">
-                      <div><strong className="text-slate-300">Vehicle:</strong> {r.vehicle}</div>
-                      <div className="mt-1"><strong className="text-slate-300">Dates:</strong> {r.dates}</div>
-                    </div>
 
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => handleRequestAction(r.id, "reject")}
-                        className="flex-1 py-2 border border-slate-800 hover:bg-slate-800 text-xs font-semibold rounded-lg text-rose-400 transition-colors"
-                      >
-                        Reject
-                      </button>
-                      <button 
-                        onClick={() => handleRequestAction(r.id, "accept")}
-                        className="flex-1 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-lg text-white transition-colors"
-                      >
-                        Accept
-                      </button>
+                      <div className="flex items-center gap-6 self-stretch sm:self-auto justify-between pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-800/80">
+                        <div className="text-right">
+                          <span className="text-base font-bold text-white">${v.price}/day</span>
+                          <span className="text-[10px] text-slate-500 block">Payout value</span>
+                        </div>
+
+                        <span className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize border ${
+                          v.status === "available" 
+                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                            : v.status === "rented"
+                            ? "bg-indigo-500/10 text-indigo-400 border-indigo-500/20"
+                            : "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                        }`}>
+                          {v.status}
+                        </span>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* EARNINGS TAB */}
+            {activeTab === "earnings" && (
+              <div className="space-y-6">
+                <h2 className="font-display font-bold text-xl text-white">Earnings Ledger</h2>
+                <div className="bg-[#0c0f17] border border-slate-800 p-6 rounded-2xl space-y-4">
+                  <div className="flex justify-between items-center text-xs text-slate-400 border-b border-slate-850 pb-3">
+                    <span>Payout for S-Class Rental</span>
+                    <span className="font-bold text-emerald-400">+$750.00</span>
                   </div>
-                ))
-              )}
+                  <div className="flex justify-between items-center text-xs text-slate-400">
+                    <span>Payout for Corolla Rental</span>
+                    <span className="font-bold text-emerald-400">+$100.00</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* BOOKINGS TAB */}
+            {activeTab === "bookings" && (
+              <div className="space-y-6">
+                <h2 className="font-display font-bold text-xl text-white">Pending Requests</h2>
+                <div className="space-y-4">
+                  {requests.length === 0 ? (
+                    <div className="border border-slate-850 p-6 rounded-2xl text-center text-slate-500 text-sm">
+                      No pending booking requests.
+                    </div>
+                  ) : (
+                    requests.map(r => (
+                      <div key={r.id} className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <span className="text-xs text-slate-500 block">Customer</span>
+                            <span className="font-semibold text-white text-sm">{r.customer}</span>
+                          </div>
+                          <span className="text-sm font-bold text-white">${r.amount}</span>
+                        </div>
+                        
+                        <div className="text-xs text-slate-400 bg-slate-900/50 p-3 rounded-lg border border-slate-850">
+                          <div><strong className="text-slate-300">Vehicle:</strong> {r.vehicle}</div>
+                          <div className="mt-1"><strong className="text-slate-300">Dates:</strong> {r.dates}</div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={() => handleRequestAction(r.id, "reject")}
+                            className="flex-1 py-2 border border-slate-800 hover:bg-slate-800 text-xs font-semibold rounded-lg text-rose-400 transition-colors"
+                          >
+                            Reject
+                          </button>
+                          <button 
+                            onClick={() => handleRequestAction(r.id, "accept")}
+                            className="flex-1 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-lg text-white transition-colors"
+                          >
+                            Accept
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* ANALYTICS TAB */}
+            {activeTab === "analytics" && (
+              <div className="space-y-6">
+                <h2 className="font-display font-bold text-xl text-white">Fleet Performance Analytics</h2>
+                
+                {/* SVG Fleet occupancy utilization chart */}
+                <div className="border border-slate-800 bg-[#0c0f17] p-6 rounded-3xl space-y-4">
+                  <h3 className="text-sm font-semibold text-slate-400">Weekly Fleet Utilization</h3>
+                  <div className="flex items-end justify-between h-40 pt-4 border-b border-slate-850">
+                    {[65, 45, 80, 50, 75, 90, 85].map((val, i) => (
+                      <div key={i} className="flex flex-col items-center gap-2 flex-1">
+                        <span className="text-[10px] text-indigo-400 font-mono font-semibold">{val}%</span>
+                        <div className="w-6 bg-indigo-600/30 border border-indigo-500/50 hover:bg-indigo-500 transition-colors rounded-t-md" style={{ height: `${val * 1.2}px` }}></div>
+                        <span className="text-[9px] text-slate-500 uppercase">W{i+1}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+
+          {/* Right Sidebar: Alerts & Actions */}
+          <div className="space-y-8">
+            <div className="bg-[#0c0f17] border border-slate-800 rounded-3xl p-8">
+              <h3 className="font-display font-bold text-lg text-white mb-6 flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-amber-400" /> Maintenance Alerts
+              </h3>
+              <div className="space-y-4">
+                <div className="text-xs text-slate-400 border-b border-slate-850 pb-4">
+                  <span className="text-amber-400 font-semibold block mb-1">Honda CB500X</span>
+                  Oil and filter service scheduled for tomorrow morning.
+                </div>
+                <div className="text-xs text-slate-400">
+                  <span className="text-emerald-400 font-semibold block mb-1">Mercedes S-Class</span>
+                  Brake inspection completed. Verified for standard operations.
+                </div>
+              </div>
+            </div>
+
+            <div className="border border-slate-800 bg-[#0c0f17] p-6 rounded-2xl flex items-center justify-between">
+              <div>
+                <span className="text-xs text-slate-500 block mb-1">Accrued Balance</span>
+                <span className="text-2xl font-extrabold text-emerald-400">${earnings}</span>
+              </div>
+              <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-xl text-white transition-colors">
+                Request Payout
+              </button>
             </div>
           </div>
+
         </div>
 
         {/* Modal: List Vehicle */}
