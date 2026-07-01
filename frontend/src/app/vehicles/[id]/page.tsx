@@ -153,7 +153,7 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ id: st
     <div className="flex flex-col min-h-screen">
       <Navbar />
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link href="/vehicles" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="h-4 w-4" /> Back to listings
         </Link>

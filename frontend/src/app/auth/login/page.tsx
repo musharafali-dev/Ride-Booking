@@ -36,9 +36,9 @@ export default function LoginPage() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
 
-      <main className="flex-grow flex items-center justify-center py-16 px-4">
+      <main className="grow flex items-center justify-center py-16 px-4">
         <div className="w-full max-w-md bg-[#0c0f17] border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
           <div className="text-center mb-8">
             <h1 className="font-display font-bold text-3xl text-white">Welcome Back</h1>

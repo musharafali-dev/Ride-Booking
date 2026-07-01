@@ -124,7 +124,7 @@ export default function VehiclesPage() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           
           {/* Filters Sidebar */}
@@ -166,7 +166,7 @@ export default function VehiclesPage() {
           </aside>
 
           {/* Results Grid */}
-          <div className="flex-grow">
+          <div className="grow">
             {/* Search Bar */}
             <div className="relative mb-8">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 h-5 w-5" />
@@ -199,7 +199,7 @@ export default function VehiclesPage() {
                         </span>
                       )}
                     </div>
-                    <div className="p-6 flex-grow flex flex-col justify-between">
+                    <div className="p-6 grow flex flex-col justify-between">
                       <div>
                         <h3 className="font-display font-bold text-xl text-white group-hover:text-indigo-400 transition-colors">
                           {v.make} {v.model}

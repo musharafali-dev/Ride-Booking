@@ -66,7 +66,7 @@ export default function Home() {
           </span>
           <h1 className="font-display font-bold text-5xl md:text-7xl tracking-tight leading-tight text-white mb-6">
             Find the Perfect Ride <br />
-            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               For Any Journey.
             </span>
           </h1>
@@ -114,7 +114,7 @@ export default function Home() {
                 href={c.link}
                 className="group relative p-8 rounded-2xl border border-slate-800 bg-[#0c0f17] hover:border-slate-700 transition-all hover:shadow-xl hover:shadow-indigo-500/5 hover:-translate-y-1"
               >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center text-white mb-6`}>
+                <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${c.color} flex items-center justify-center text-white mb-6`}>
                   <Icon className="h-6 w-6" />
                 </div>
                 <h3 className="font-display font-semibold text-xl text-white mb-2 group-hover:text-indigo-400 transition-colors">

@@ -29,7 +29,7 @@ export default function Navbar() {
           <div className="bg-indigo-600 p-2 rounded-xl text-white">
             <Car className="h-6 w-6" />
           </div>
-          <span className="font-display font-bold text-2xl bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+          <span className="font-display font-bold text-2xl bg-linear-to-r from-white to-slate-400 bg-clip-text text-transparent">
             RideSphere
           </span>
         </Link>
