@@ -69,7 +69,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
           <div className="flex gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">
             <span>Admin</span> &bull; <span>Dashboard</span> &bull; <span className="text-blue-600">{activeTab}</span>
           </div>
-          <h1 className="font-display font-bold text-3xl text-slate-900 font-sans">Central Operations Center</h1>
+          <h1 className="font-display font-bold text-3xl text-slate-900">Central Operations Center</h1>
           <p className="text-xs text-slate-500 mt-1">Audit verification documents, configure system gateway health, and view transaction logs.</p>
         </div>
 

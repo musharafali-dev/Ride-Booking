@@ -38,7 +38,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -65,7 +65,7 @@ export default function ProfilePage() {
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
+                    className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
                   />
                 </div>
 
@@ -76,7 +76,7 @@ export default function ProfilePage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
+                    className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
                   />
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function ProfilePage() {
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
+                    className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
                   />
                 </div>
 
@@ -102,7 +102,7 @@ export default function ProfilePage() {
                       required
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 pl-10 pr-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 pl-10 pr-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -120,7 +120,7 @@ export default function ProfilePage() {
                       type="text"
                       value={emergencyName}
                       onChange={(e) => setEmergencyName(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
                     />
                   </div>
                   <div>
@@ -129,7 +129,7 @@ export default function ProfilePage() {
                       type="tel"
                       value={emergencyPhone}
                       onChange={(e) => setEmergencyPhone(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-4 focus:border-blue-600 focus:outline-none text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function ProfilePage() {
 
               <div className="space-y-3 pt-2">
                 {savedCards.map((card, idx) => (
-                  <div key={idx} className="border border-slate-150 rounded-2xl p-4 flex justify-between items-center bg-[#F8FAFC]">
+                  <div key={idx} className="border border-slate-150 rounded-2xl p-4 flex justify-between items-center bg-brand-bg">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-6 bg-slate-900 text-white rounded flex items-center justify-center font-bold text-[8px] tracking-wider">
                         {card.brand.toUpperCase()}

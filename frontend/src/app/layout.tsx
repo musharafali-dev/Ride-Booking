@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${poppins.variable} antialiased bg-[#F8FAFC] text-[#0F172A] min-h-screen flex flex-col font-sans`}
+        className={`${inter.variable} ${poppins.variable} antialiased bg-bg-light text-secondary min-h-screen flex flex-col font-sans`}
       >
         {children}
       </body>

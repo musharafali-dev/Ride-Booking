@@ -72,7 +72,7 @@ export default function OperatorDashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -187,7 +187,7 @@ export default function OperatorDashboard() {
                           <select 
                             value={t.guide}
                             onChange={(e) => assignGuide(t.id, e.target.value)}
-                            className="bg-[#F8FAFC] border border-slate-200 text-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1 focus:outline-none"
+                            className="bg-brand-bg border border-slate-200 text-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1 focus:outline-none"
                           >
                             <option value="Unassigned">Unassigned</option>
                             {guides.map(g => (
@@ -214,7 +214,7 @@ export default function OperatorDashboard() {
                     placeholder="Enter full name of guide"
                     value={newGuide}
                     onChange={(e) => setNewGuide(e.target.value)}
-                    className="flex-grow bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-blue-600 font-semibold"
+                    className="grow bg-brand-bg border border-slate-200 text-slate-800 rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-blue-600 font-semibold"
                   />
                   <button 
                     type="submit"
@@ -276,7 +276,7 @@ export default function OperatorDashboard() {
                     placeholder="Hunza Discovery Tour"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
+                    className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
                   />
                 </div>
 
@@ -289,7 +289,7 @@ export default function OperatorDashboard() {
                       placeholder="7"
                       value={duration}
                       onChange={(e) => setDuration(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
                     />
                   </div>
                   <div>
@@ -300,7 +300,7 @@ export default function OperatorDashboard() {
                       placeholder="399"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -310,7 +310,7 @@ export default function OperatorDashboard() {
                   <select
                     value={selectedGuide}
                     onChange={(e) => setSelectedGuide(e.target.value)}
-                    className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 text-xs font-semibold rounded-xl p-2.5 focus:outline-none"
+                    className="w-full bg-brand-bg border border-slate-200 text-slate-800 text-xs font-semibold rounded-xl p-2.5 focus:outline-none"
                   >
                     <option value="">Choose Guide</option>
                     {guides.map(g => (

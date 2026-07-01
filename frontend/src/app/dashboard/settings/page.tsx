@@ -40,7 +40,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -148,12 +148,12 @@ export default function SettingsPage() {
                         <input
                           type="password"
                           placeholder="Current Password"
-                          className="bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2 px-3 focus:outline-none focus:border-blue-600 text-xs font-medium"
+                          className="bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2 px-3 focus:outline-none focus:border-blue-600 text-xs font-medium"
                         />
                         <input
                           type="password"
                           placeholder="New Password"
-                          className="bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2 px-3 focus:outline-none focus:border-blue-600 text-xs font-medium"
+                          className="bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2 px-3 focus:outline-none focus:border-blue-600 text-xs font-medium"
                         />
                       </div>
                     </div>
@@ -230,7 +230,7 @@ export default function SettingsPage() {
                         <select
                           value={lang}
                           onChange={(e) => setLang(e.target.value)}
-                          className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 text-xs font-semibold rounded-xl p-2.5 focus:outline-none"
+                          className="w-full bg-brand-bg border border-slate-200 text-slate-800 text-xs font-semibold rounded-xl p-2.5 focus:outline-none"
                         >
                           <option value="en">English (US)</option>
                           <option value="ur">Urdu (اردو)</option>

@@ -38,7 +38,7 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow flex items-center justify-center py-16 px-4">
@@ -73,7 +73,7 @@ export default function VerifyPage() {
                   placeholder="123456"
                   value={code}
                   onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-                  className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-3 text-center font-bold tracking-widest text-lg focus:border-blue-600 focus:outline-none"
+                  className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-3 text-center font-bold tracking-widest text-lg focus:border-blue-600 focus:outline-none"
                 />
               </div>
 

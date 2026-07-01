@@ -47,7 +47,7 @@ export default function CustomerDashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -255,7 +255,7 @@ export default function CustomerDashboard() {
                       placeholder="BK-9901 - Roadside assist query"
                       value={ticketSubject}
                       onChange={(e) => setTicketSubject(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl py-2 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
                     />
                   </div>
 
@@ -267,7 +267,7 @@ export default function CustomerDashboard() {
                       placeholder="Describe the issue you encountered..."
                       value={ticketDesc}
                       onChange={(e) => setTicketDesc(e.target.value)}
-                      className="w-full bg-[#F8FAFC] border border-slate-200 text-slate-800 rounded-xl p-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
+                      className="w-full bg-brand-bg border border-slate-200 text-slate-800 rounded-xl p-3 focus:outline-none focus:border-blue-600 text-xs font-semibold"
                     />
                   </div>
 

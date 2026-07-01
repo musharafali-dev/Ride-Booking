@@ -38,7 +38,7 @@ export default function DriverDashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -218,7 +218,7 @@ export default function DriverDashboard() {
                 </div>
 
                 <div className="space-y-4 pt-2">
-                  <div className="border border-slate-150 rounded-2xl p-4 flex justify-between items-center bg-[#F8FAFC]">
+                  <div className="border border-slate-150 rounded-2xl p-4 flex justify-between items-center bg-brand-bg">
                     <div>
                       <span className="text-xs font-bold text-slate-800 block">Driver License (DL-PK-998822)</span>
                       <span className="text-[10px] text-emerald-600 font-semibold mt-0.5 flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5" /> VERIFIED</span>

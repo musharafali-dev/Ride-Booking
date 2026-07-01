@@ -71,9 +71,9 @@ export default function LoginPage() {
           </div>
 
           <div className="relative flex py-2 items-center mb-6">
-            <div className="flex-grow border-t border-slate-100"></div>
-            <span className="flex-shrink mx-4 text-slate-400 text-[10px] uppercase font-bold tracking-widest">Or login with</span>
-            <div className="flex-grow border-t border-slate-100"></div>
+            <div className="grow border-t border-slate-100"></div>
+            <span className="shrink mx-4 text-slate-400 text-[10px] uppercase font-bold tracking-widest">Or login with</span>
+            <div className="grow border-t border-slate-100"></div>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">

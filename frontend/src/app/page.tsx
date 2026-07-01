@@ -149,7 +149,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-brand-bg">
       <Navbar />
 
       <main className="grow">
@@ -244,7 +244,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-center justify-between gap-3">
-                  <div className="border border-slate-100 rounded-2xl p-3 flex flex-col justify-center flex-grow">
+                  <div className="border border-slate-100 rounded-2xl p-3 flex flex-col justify-center grow">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Return Date</span>
                     <div className="flex items-center gap-1.5 mt-1">
                       <Calendar className="h-4 w-4 text-blue-600 shrink-0" />
