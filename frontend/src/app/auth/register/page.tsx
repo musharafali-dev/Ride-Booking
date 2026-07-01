@@ -66,7 +66,7 @@ export default function RegisterPage() {
               alt="Travel Highway scenic view" 
               className="w-full h-full object-cover opacity-30"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 to-slate-950/90 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-linear-to-br from-blue-900/60 to-slate-950/90 mix-blend-multiply"></div>
           </div>
 
           <div className="relative z-10">

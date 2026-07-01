@@ -298,7 +298,7 @@ export default function Home() {
               >
                 {/* Image Container */}
                 <div className="w-full h-36 overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-slate-900/60 to-transparent z-10"></div>
                   <img 
                     src={cat.image} 
                     alt={cat.name} 

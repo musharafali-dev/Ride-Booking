@@ -72,7 +72,7 @@ export default function AdminLogin() {
               alt="Cybersecurity grid background" 
               className="w-full h-full object-cover opacity-15"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-slate-950/98 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-linear-to-br from-slate-900/80 to-slate-950/98 mix-blend-multiply"></div>
           </div>
 
           <div className="relative z-10">
