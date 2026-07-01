@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "Book city rides, rent self-drive vehicles, bikes, luxury cars, tourist buses, and customize tour packages.",
 };
 
+import AuthGuardModal from "@/components/AuthGuardModal";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,6 +31,7 @@ export default function RootLayout({
         className={`${inter.variable} ${poppins.variable} antialiased bg-bg-light text-secondary min-h-screen flex flex-col font-sans`}
       >
         {children}
+        <AuthGuardModal />
       </body>
     </html>
   );

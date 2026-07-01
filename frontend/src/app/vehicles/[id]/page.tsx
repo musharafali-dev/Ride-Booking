@@ -149,6 +149,14 @@ export default function VehicleDetailPage({ params }: { params: Promise<{ id: st
     setIsSubmitting(true);
     setErrorMsg("");
 
+    // Check authentication status
+    const userEmail = localStorage.getItem("user_email");
+    if (!userEmail) {
+      window.dispatchEvent(new CustomEvent("show-auth-guard"));
+      setIsSubmitting(false);
+      return;
+    }
+
     // Validate inputs based on payment method
     if (paymentMethod === "card") {
       if (!cardNumber || cardNumber.replace(/\s/g, "").length < 16) {

@@ -31,6 +31,9 @@ export default function AdminDashboard() {
   const [usersList, setUsersList] = useState<any[]>([]);
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
+  const [pendingOwners, setPendingOwners] = useState<any[]>([]);
+  const [pendingDrivers, setPendingDrivers] = useState<any[]>([]);
+  const [pendingOperators, setPendingOperators] = useState<any[]>([]);
 
   useEffect(() => {
     setVerifications([
@@ -53,6 +56,21 @@ export default function AdminDashboard() {
     const storedBookings = localStorage.getItem("pending_bookings");
     if (storedBookings) {
       setBookings(JSON.parse(storedBookings));
+    }
+
+    const storedOwners = localStorage.getItem("pending_owner_applications");
+    if (storedOwners) {
+      setPendingOwners(JSON.parse(storedOwners));
+    }
+
+    const storedDrivers = localStorage.getItem("pending_driver_applications");
+    if (storedDrivers) {
+      setPendingDrivers(JSON.parse(storedDrivers));
+    }
+
+    const storedOperators = localStorage.getItem("pending_operator_applications");
+    if (storedOperators) {
+      setPendingOperators(JSON.parse(storedOperators));
     }
   }, []);
 
@@ -89,6 +107,50 @@ export default function AdminDashboard() {
       {
         timestamp: "Just now",
         action: `Booking ${id} ${action === "approve" ? "Approved" : "Rejected"}`,
+        user: "Admin User",
+        status: "Success"
+      },
+      ...prev
+    ]);
+  };
+
+  const handlePartnerApproval = (id: string, partnerType: "owner" | "driver" | "operator", action: "approve" | "reject") => {
+    if (partnerType === "owner") {
+      setPendingOwners(prev => {
+        const updated = prev.map(o => o.id === id ? { ...o, status: action === "approve" ? "approved" : "rejected" } : o);
+        localStorage.setItem("pending_owner_applications", JSON.stringify(updated));
+        const target = updated.find(o => o.id === id);
+        if (target && localStorage.getItem("user_email") === target.email) {
+          localStorage.setItem("user_status", action === "approve" ? "ACTIVE" : "REJECTED");
+        }
+        return updated;
+      });
+    } else if (partnerType === "driver") {
+      setPendingDrivers(prev => {
+        const updated = prev.map(d => d.id === id ? { ...d, status: action === "approve" ? "approved" : "rejected" } : d);
+        localStorage.setItem("pending_driver_applications", JSON.stringify(updated));
+        const target = updated.find(d => d.id === id);
+        if (target && localStorage.getItem("user_email") === target.email) {
+          localStorage.setItem("user_status", action === "approve" ? "ACTIVE" : "REJECTED");
+        }
+        return updated;
+      });
+    } else if (partnerType === "operator") {
+      setPendingOperators(prev => {
+        const updated = prev.map(o => o.id === id ? { ...o, status: action === "approve" ? "approved" : "rejected" } : o);
+        localStorage.setItem("pending_operator_applications", JSON.stringify(updated));
+        const target = updated.find(o => o.id === id);
+        if (target && localStorage.getItem("user_email") === target.email) {
+          localStorage.setItem("user_status", action === "approve" ? "ACTIVE" : "REJECTED");
+        }
+        return updated;
+      });
+    }
+
+    setAuditLogs(prev => [
+      {
+        timestamp: "Just now",
+        action: `${partnerType.toUpperCase()} Application ${id} ${action === "approve" ? "Approved" : "Rejected"}`,
         user: "Admin User",
         status: "Success"
       },
@@ -237,8 +299,10 @@ export default function AdminDashboard() {
               {/* APPROVALS TAB */}
               {activeTab === "approvals" && (
                 <div className="space-y-8">
+                  
+                  {/* Verification Center */}
                   <div className="space-y-6">
-                    <h2 className="font-display font-bold text-lg text-slate-800">Verification Center</h2>
+                    <h2 className="font-display font-bold text-lg text-slate-800">Verification Center (Documents & Profiles)</h2>
 
                     <div className="space-y-4">
                       {verifications.filter(v => v.status === "pending").length === 0 ? (
@@ -272,6 +336,149 @@ export default function AdminDashboard() {
                                 className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm"
                               >
                                 Approve
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Pending Fleet Owners */}
+                  <div className="space-y-6 pt-8 border-t border-slate-100">
+                    <h2 className="font-display font-bold text-lg text-slate-800">Pending Fleet Owners</h2>
+                    <div className="space-y-4">
+                      {pendingOwners.filter(o => o.status === "pending").length === 0 ? (
+                        <div className="bg-white border border-slate-100 p-8 rounded-3xl text-center text-slate-455 text-xs shadow-sm">
+                          No pending owner registration applications. Pending: 0.
+                        </div>
+                      ) : (
+                        pendingOwners.filter(o => o.status === "pending").map(o => (
+                          <div key={o.id} className="bg-white border border-slate-100 p-6 rounded-3xl space-y-4 shadow-sm animate-in fade-in duration-200">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <span className="text-[9px] bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full font-bold">{o.type}</span>
+                                <h3 className="font-display font-bold text-md text-slate-850 mt-2">{o.name}</h3>
+                              </div>
+                              <span className="text-xs text-slate-400 font-mono font-semibold">{o.id}</span>
+                            </div>
+
+                            <div className="text-xs text-slate-550 space-y-1 bg-slate-50 p-3.5 rounded-xl border border-slate-100 font-semibold">
+                              <p>Business Name: <strong className="text-slate-800">{o.businessName || "N/A"}</strong></p>
+                              <p>Email: <strong className="text-slate-800">{o.email}</strong></p>
+                              <p>Phone: <strong className="text-slate-800">{o.phone}</strong></p>
+                              <p>CNIC / Passport: <strong className="text-slate-800">{o.cnic}</strong></p>
+                              <p>Business Reg / NTN: <strong className="text-slate-850">{o.businessReg || "N/A"} / {o.taxNumber || "N/A"}</strong></p>
+                              <p>Address: <strong className="text-slate-500">{o.address}</strong></p>
+                            </div>
+
+                            <div className="flex gap-2 justify-end">
+                              <button 
+                                onClick={() => handlePartnerApproval(o.id, "owner", "reject")}
+                                className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-red-650 rounded-xl cursor-pointer"
+                              >
+                                Reject Application
+                              </button>
+                              <button 
+                                onClick={() => handlePartnerApproval(o.id, "owner", "approve")}
+                                className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm"
+                              >
+                                Approve Application
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Pending Drivers */}
+                  <div className="space-y-6 pt-8 border-t border-slate-100">
+                    <h2 className="font-display font-bold text-lg text-slate-800">Pending Chauffeur Drivers</h2>
+                    <div className="space-y-4">
+                      {pendingDrivers.filter(d => d.status === "pending").length === 0 ? (
+                        <div className="bg-white border border-slate-100 p-8 rounded-3xl text-center text-slate-455 text-xs shadow-sm">
+                          No pending driver applications. Pending: 0.
+                        </div>
+                      ) : (
+                        pendingDrivers.filter(d => d.status === "pending").map(d => (
+                          <div key={d.id} className="bg-white border border-slate-100 p-6 rounded-3xl space-y-4 shadow-sm animate-in fade-in duration-200">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <span className="text-[9px] bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full font-bold">{d.type}</span>
+                                <h3 className="font-display font-bold text-md text-slate-850 mt-2">{d.name}</h3>
+                              </div>
+                              <span className="text-xs text-slate-400 font-mono font-semibold">{d.id}</span>
+                            </div>
+
+                            <div className="text-xs text-slate-550 space-y-1 bg-slate-50 p-3.5 rounded-xl border border-slate-100 font-semibold">
+                              <p>Email: <strong className="text-slate-800">{d.email}</strong></p>
+                              <p>Phone: <strong className="text-slate-800">{d.phone}</strong></p>
+                              <p>CNIC / Driving License: <strong className="text-slate-850">{d.cnic} / {d.licenseNumber}</strong></p>
+                              <p>Expertise Category: <strong className="text-blue-600 capitalize">{d.vehicleType.replace("_", " ")}</strong></p>
+                              <p>Years of Experience: <strong className="text-slate-800">{d.experience} Years</strong></p>
+                            </div>
+
+                            <div className="flex gap-2 justify-end">
+                              <button 
+                                onClick={() => handlePartnerApproval(d.id, "driver", "reject")}
+                                className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-red-650 rounded-xl cursor-pointer"
+                              >
+                                Reject Driver
+                              </button>
+                              <button 
+                                onClick={() => handlePartnerApproval(d.id, "driver", "approve")}
+                                className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm"
+                              >
+                                Approve Driver
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Pending Tour Operators */}
+                  <div className="space-y-6 pt-8 border-t border-slate-100">
+                    <h2 className="font-display font-bold text-lg text-slate-800">Pending Tour Agencies</h2>
+                    <div className="space-y-4">
+                      {pendingOperators.filter(p => p.status === "pending").length === 0 ? (
+                        <div className="bg-white border border-slate-100 p-8 rounded-3xl text-center text-slate-455 text-xs shadow-sm">
+                          No pending agency licenses. Pending: 0.
+                        </div>
+                      ) : (
+                        pendingOperators.filter(p => p.status === "pending").map(p => (
+                          <div key={p.id} className="bg-white border border-slate-100 p-6 rounded-3xl space-y-4 shadow-sm animate-in fade-in duration-200">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <span className="text-[9px] bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full font-bold">{p.type}</span>
+                                <h3 className="font-display font-bold text-md text-slate-850 mt-2">{p.companyName}</h3>
+                              </div>
+                              <span className="text-xs text-slate-400 font-mono font-semibold">{p.id}</span>
+                            </div>
+
+                            <div className="text-xs text-slate-550 space-y-1 bg-slate-50 p-3.5 rounded-xl border border-slate-100 font-semibold">
+                              <p>Owner / Director: <strong className="text-slate-800">{p.name}</strong></p>
+                              <p>Email: <strong className="text-slate-800">{p.email}</strong></p>
+                              <p>Phone: <strong className="text-slate-800">{p.phone}</strong></p>
+                              <p>Business Reg / Tourism License: <strong className="text-slate-850">{p.businessReg} / {p.tourismLicense}</strong></p>
+                              <p>Tax NTN & Credentials: <strong className="text-slate-800">{p.taxInfo}</strong></p>
+                              <p>Office Address: <strong className="text-slate-500">{p.address}</strong></p>
+                            </div>
+
+                            <div className="flex gap-2 justify-end">
+                              <button 
+                                onClick={() => handlePartnerApproval(p.id, "operator", "reject")}
+                                className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-red-650 rounded-xl cursor-pointer"
+                              >
+                                Reject License
+                              </button>
+                              <button 
+                                onClick={() => handlePartnerApproval(p.id, "operator", "approve")}
+                                className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm"
+                              >
+                                Approve License
                               </button>
                             </div>
                           </div>

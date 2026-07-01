@@ -20,8 +20,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
     setErrorMsg("");
 
-    // Simulate login for database seeded roles
-    // e.g. customer1@ridesphere.com -> customer, owner1@ridesphere.com -> owner, etc.
+    // Identify role based on email pattern
     let resolvedRole = "customer";
     if (email.startsWith("admin")) {
       resolvedRole = "admin";
@@ -33,12 +32,38 @@ export default function LoginPage() {
       resolvedRole = "operator";
     }
 
+    // Determine status: Seeded credentials are ACTIVE, new custom registered partner applications are PENDING by default
+    let resolvedStatus = "ACTIVE";
+    
+    // Check if there is an existing registered user session matching this email in localStorage
+    const savedEmail = localStorage.getItem("user_email");
+    const savedStatus = localStorage.getItem("user_status");
+    
+    if (savedEmail === email && savedStatus) {
+      resolvedStatus = savedStatus;
+    } else if (resolvedRole !== "customer" && resolvedRole !== "admin") {
+      // Non-seeded new partner logins default to PENDING
+      if (email !== "owner1@ridesphere.com" && email !== "driver1@ridesphere.com" && email !== "operator1@ridesphere.com") {
+        resolvedStatus = "PENDING";
+      }
+    }
+
+    // Save session variables
     localStorage.setItem("user_role", resolvedRole);
     localStorage.setItem("user_email", email);
-    
+    localStorage.setItem("user_status", resolvedStatus);
+    if (!localStorage.getItem("user_name")) {
+      localStorage.setItem("user_name", email.split("@")[0]);
+    }
+
     setTimeout(() => {
       setIsSubmitting(false);
-      router.push(`/dashboard/${resolvedRole}`);
+
+      if (resolvedStatus === "PENDING" || resolvedStatus === "REJECTED") {
+        router.push("/auth/review");
+      } else {
+        router.push(`/dashboard/${resolvedRole}`);
+      }
     }, 800);
   };
 
