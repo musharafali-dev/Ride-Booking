@@ -4,10 +4,10 @@ from app.api.deps import get_current_user, get_user_repo
 from app.domain.entities.user import User
 from app.infrastructure.repositories.sql_user_repo import SQLUserRepository
 
-router = APIRouter(prefix="/riders", tags=["Riders"])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.get("/me", response_model=UserResponse)
-async def get_rider_profile(current_user: User = Depends(get_current_user)):
+async def get_user_profile(current_user: User = Depends(get_current_user)):
     return UserResponse(
         id=current_user.id,
         email=current_user.email.value,
@@ -19,7 +19,7 @@ async def get_rider_profile(current_user: User = Depends(get_current_user)):
     )
 
 @router.put("/me", response_model=UserResponse)
-async def update_rider_profile(
+async def update_user_profile(
     request: UpdateProfileRequest,
     current_user: User = Depends(get_current_user),
     user_repo: SQLUserRepository = Depends(get_user_repo)
